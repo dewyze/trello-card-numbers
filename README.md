@@ -9,3 +9,6 @@ This extension does the following:
 
 ## Credit
 This project was based off the widely available bookmarklet for trello numbers found [here](http://goo.gl/yKfjV).
+
+### Chrome Web Store
+Install it [here](https://chrome.google.com/webstore/detail/trello-card-numbers/kadpkdielickimifpinkknemjdipghaf?hl=en&gl=US).
