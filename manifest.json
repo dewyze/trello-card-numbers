@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "Trello Card Numbers",
+  "description": "Adds card numbers to a variety of places when using Trello.",
+  "version": "0.1",
+
+  "permissions": [
+    "https://trello.com/*"
+  ],
+
+  "content_scripts": [
+    {
+    "matches": ["https://trello.com/*"],
+    "js": ["jquery-1.11.1.min.js", "trello-card-numbers.js"]
+  }
+  ]
+}
