@@ -78,7 +78,7 @@ $(document).ready(function() {
     });
 
     // add card number to card details lightbox
-    $("body").on("click mouseup","div.list-card-details.clearfix", function() {
+    $("body").on("click mouseup","div.list-card-details.u-clearfix", function() {
         var id = $(this).find(".card-short-id").html();
         detailsReady(id).then(function() {
 
