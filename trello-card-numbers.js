@@ -1,11 +1,23 @@
+var LIGHTBOX_SELECTOR = ".window-title.card-detail-title.non-empty.u-inline.editable";
+var LINK_SELECTOR = "a.list-card-title.js-card-name";
+var LIST_NUM_CARDS_SELECTOR = ".list-header-num-cards";
+var CARD_SHORT_ID = ".card-short-id";
+var TCN_HEADER = ".trello-card-numbers-detail-header";
+var TCN_NUM_SHOW = "trello-card-numbers-show";
+var TCN_INLINE_BLOCK = "trello-card-numbers-inline-block";
+
+function classify(name) {
+  return "." + name;
+}
+
 // ensure lightbox is loaded before adding to it
 function detailsReady(id) {
     var dfd = jQuery.Deferred();
 
     var inc = 40;
     var detailsListener = function(interval) {
-      if ($(".window-title.card-detail-title.non-empty.inline.editable").length != 0) {
-            dfd.resolve($(".bt-card-details-number").length != 0);
+      if ($(LIGHTBOX_SELECTOR).length != 0) {
+            dfd.resolve($(LIGHTBOX_SELECTOR).length != 0);
         } else {
             interval = interval + 1 || 1;
             if (interval < inc) {
@@ -49,45 +61,45 @@ function log(data) {
 
 $(document).ready(function() {
     // show card numbers initially, this script is activated after everything is loaded
-    $(".list-header-num-cards").addClass("trello-card-numbers-inline-block");
-    $(".trello-card-numbers-inline-block").css("display","inline-block");
-    $(".card-short-id").addClass("trello-card-numbers-show");
-    $(".trello-card-numbers-show").show();
+    $(LIST_NUM_CARDS_SELECTOR).addClass(TCN_INLINE_BLOCK);
+    $(classify(TCN_INLINE_BLOCK)).css("display","inline-block");
+    $(CARD_SHORT_ID).addClass(TCN_NUM_SHOW);
+    $(classify(TCN_NUM_SHOW)).show();
 
     // needed for switching boards
     $(document).on("DOMNodeInserted",".list", function() {
-        $(".list-header-num-cards").addClass("trello-card-numbers-inline-block");
-        $(".trello-card-numbers-inline-block").css("display","inline-block");
+        $(LIST_NUM_CARDS_SELECTOR).addClass(TCN_INLINE_BLOCK);
+        $(classify(TCN_INLINE_BLOCK)).css("display","inline-block");
     })
 
     // show card numbers after card is inserted
     $(document).on("DOMNodeInserted",".list-card.js-member-droppable", function() {
-        $(".card-short-id").addClass("trello-card-numbers-show");
-        $(".trello-card-numbers-show").show();
+        $(CARD_SHORT_ID).addClass(TCN_NUM_SHOW);
+        $(classify(TCN_NUM_SHOW)).show();
 
         // get card number for new cards using URL and add it to card-short-id
-        card = $(this).find("a.list-card-title.clear.js-card-name");
+        card = $(this).find(LINK_SELECTOR);
         if (card.attr("href") === undefined) {
-            hrefReady($(this).find("a.list-card-title.clear.js-card-name")).then( function(href) {
+            hrefReady($(this).find(LINK_SELECTOR)).then( function(href) {
                 var title = href.split("/");
                 var s = title[title.length-1];
                 var num = s.substr(0,s.indexOf("-"));
-                card.find(".card-short-id").html("#" + num + " ");
+                card.find(CARD_SHORT_ID).html("#" + num + " ");
             });
         }
     });
 
     // add card number to card details lightbox
     $("body").on("click mouseup","div.list-card-details.u-clearfix", function() {
-        var id = $(this).find(".card-short-id").html();
+        var id = $(this).find(CARD_SHORT_ID).html();
         detailsReady(id).then(function() {
 
             // if/else needed to handle multiple promises
-            var obj = $(".window-title.card-detail-title.non-empty.inline.editable");
-            if ($(".trello-card-numbers-detail-header").length > 0) {
-                $(".trello-card-numbers-detail-header").html(id);
+            var obj = $(LIGHTBOX_SELECTOR);
+            if ($(TCN_HEADER).length > 0) {
+                $(TCN_HEADER).html(id);
             } else {
-                obj.prepend("<h2 class='trello-card-numbers-detail-header quiet'>" + id + "</h2>");
+                obj.prepend("<h2 class='" + TCN_HEADER + " quiet'>" + id + "</h2>");
             }
         });
     });

@@ -1,3 +1,6 @@
+## 1.0.1 (2015-02-28)
+- Updated css selectors due to trello change, refactor selectors into constants.
+
 ## 1.0 (2015-02-15)
 - Updated card selector for number in lightbox.
 
