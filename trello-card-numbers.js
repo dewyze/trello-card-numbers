@@ -1,3 +1,9 @@
+function readyListener(callback,condition,resolveValue) {
+  var promise = new Promise(function(resolve,reject) {
+    var inc = 40;
+    var listener = function(interval) {
+      callback();
+
 // ensure lightbox is loaded before adding to it
 function detailsReady() {
   var promise = new Promise(function(resolve,reject) {
@@ -76,12 +82,6 @@ window.addEventListener("load", function() {
   shortIds = document.getElementsByClassName("trello-card-numbers-inline");
   addDisplayToArray(shortIds,"inline");
 
-  // needed for switching boards
-  // $(document).on("DOMNodeInserted",".list", function() {
-    // $(".list-header-num-cards").addClass("trello-card-numbers-inline-block");
-    // $(".trello-card-numbers-inline-block").css("display","inline-block");
-  // })
-
   // show card numbers after card is inserted
   var target = document.querySelector("#content");
 
@@ -115,12 +115,6 @@ window.addEventListener("load", function() {
   });
 
   observer.observe(target,config);
-  // });
-
-  // $(document).on("DOMNodeInserted",".list-card.js-member-droppable", function() {
-
-  //   // get card number for new cards using URL and add it to card-short-id
-  // });
 
   // add card number to card details lightbox
   document.body.addEventListener("mouseup", function(e) {
