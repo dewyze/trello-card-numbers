@@ -3,13 +3,16 @@ function readyListener(callback,condition,resolveValue) {
     var inc = 40;
     var listener = function(interval) {
       callback();
+    }
+  });
+}
 
 // ensure lightbox is loaded before adding to it
 function detailsReady() {
   var promise = new Promise(function(resolve,reject) {
     var inc = 40;
     var detailsListener = function(interval) {
-      var lightbox = document.getElementsByClassName("window-title card-detail-title non-empty inline editable");
+      var lightbox = document.getElementsByClassName("window-title card-detail-title non-empty u-inline editable");
       if (lightbox.length != 0) {
         resolve("true");
       }
@@ -130,7 +133,7 @@ window.addEventListener("load", function() {
         if (header.length > 0) {
           header.innerHTML = id;
         } else {
-          var obj = document.getElementsByClassName("window-title card-detail-title non-empty inline editable")[0];
+          var obj = document.getElementsByClassName("window-title card-detail-title non-empty u-inline editable")[0];
           obj.innerHTML = "<h2 class='trello-card-numbers-detail-header quiet'>" + id + "</h2>" + obj.innerHTML;
         }
       }, function (err) {
