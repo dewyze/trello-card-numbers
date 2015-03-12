@@ -2,7 +2,7 @@ var LIGHTBOX_SELECTOR = ".window-title.card-detail-title.non-empty.u-inline.edit
 var LINK_SELECTOR = "a.list-card-title.js-card-name";
 var LIST_NUM_CARDS_SELECTOR = ".list-header-num-cards";
 var CARD_SHORT_ID = ".card-short-id";
-var TCN_HEADER = ".trello-card-numbers-detail-header";
+var TCN_HEADER = "trello-card-numbers-detail-header";
 var TCN_NUM_SHOW = "trello-card-numbers-show";
 var TCN_INLINE_BLOCK = "trello-card-numbers-inline-block";
 
@@ -96,7 +96,7 @@ $(document).ready(function() {
 
             // if/else needed to handle multiple promises
             var obj = $(LIGHTBOX_SELECTOR);
-            if ($(TCN_HEADER).length > 0) {
+            if ($(classify(TCN_HEADER)).length > 0) {
                 $(TCN_HEADER).html(id);
             } else {
                 obj.prepend("<h2 class='" + TCN_HEADER + " quiet'>" + id + "</h2>");
