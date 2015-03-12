@@ -1,3 +1,6 @@
+## 1.0.2 (2015-03-11)
+- Restore functionality preventing queueing of lightbox ids on card moves.
+
 ## 1.0.1 (2015-02-28)
 - Updated css selectors due to trello change, refactor selectors into constants.
 
