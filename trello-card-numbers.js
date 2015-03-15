@@ -74,8 +74,30 @@ function addClass(selector, newClass, display) {
   };
 }
 
+function hasClass(target, className) {
+  className = " " + className + " ";
+  if (target.className) {
+    return (" " + target.className + " ").replace(/[\n\t]/g, " ").indexOf(className) > -1
+  }
+  return false;
+}
+
 function getByClass(name) {
   return document.getElementsByClassName(name);
+}
+
+function getAncestorBySelector(elem, selector) {
+  var node = elem;
+  while (node.tagName != "BODY") {
+    if (hasClass(node, selector)) {
+      return node;
+    }
+    if (node.parentNode !== "undefined") {
+      node = node.parentNode;
+    } else {
+      return null;
+    }
+  }
 }
 
 window.addEventListener("load", function() {
@@ -99,24 +121,24 @@ window.addEventListener("load", function() {
         }
         if (classes
             && (
-                (classes.contains("list-card") && classes.contains("js-member-droppable"))
+              (classes.contains("list-card") && classes.contains("js-member-droppable"))
                 || classes.contains("search-result-card")
             )
            ) {
-          showCardIds();
-          var card = node.querySelectorAll("a.list-card-title.js-card-name")[0];
-          if (card.getAttribute("href") == undefined) {
-            hrefReady(card).then(function(href) {
-              var title = href.split("/");
-              var s = title[title.length-1];
-              var num = s.substr(0,s.indexOf("-"));
-              var shortId = card.querySelector(".card-short-id");
-              shortId.innerHTML = "#" + num + " ";
-            }, function(err) {
-              log(err);
-            });
-          }
-        }
+             showCardIds();
+             var card = node.querySelectorAll("a.list-card-title.js-card-name")[0];
+             if (card.getAttribute("href") == undefined) {
+               hrefReady(card).then(function(href) {
+                 var title = href.split("/");
+                 var s = title[title.length-1];
+                 var num = s.substr(0,s.indexOf("-"));
+                 var shortId = card.querySelector(".card-short-id");
+                 shortId.innerHTML = "#" + num + " ";
+               }, function(err) {
+                 log(err);
+               });
+             }
+           }
       }
     });
   });
@@ -125,17 +147,9 @@ window.addEventListener("load", function() {
 
   // add card number to card details lightbox
   document.body.addEventListener("mouseup", function(e) {
-    if (
-      e.target.getAttribute('class').indexOf('list-card-details') >= 0
-      || e.target.parentNode.getAttribute('class').indexOf('list-card-details') >= 0
-      || e.target.parentNode.getAttribute('class').indexOf('search-result-card') >= 0
-    ) {
-      if (e.target.parentNode.getAttribute('class').indexOf('search-result-card') >= 0) {
-        id = e.target.parentNode.querySelectorAll(".card-short-id")[0].innerHTML;
-      }
-      else {
-        var id = e.target.querySelectorAll(".card-short-id")[0].innerHTML;
-      }
+    var listCard =  getAncestorBySelector(e.target, 'list-card-details') || getAncestorBySelector(e.target, 'search-result-card');
+    if (listCard) {
+      var id = listCard.querySelectorAll(".card-short-id")[0].innerHTML;
       detailsReady().then(function() {
 
         // if/else needed to handle multiple promises
