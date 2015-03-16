@@ -111,6 +111,11 @@ window.addEventListener("load", function() {
 
   var config = { attributes: true, childList: true, subtree: true, characterData: true }
 
+  // $(document).on("DOMNodeInserted",".list", function() {
+  //   $(LIST_NUM_CARDS_SELECTOR).addClass(TCN_INLINE_BLOCK);
+  //   $(classify(TCN_INLINE_BLOCK)).css("display","inline-block");
+  // })
+
   var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
       if (mutation.addedNodes.length > 0) {
@@ -119,26 +124,25 @@ window.addEventListener("load", function() {
         if (classes && classes.contains("search-result-card")) {
           showCardIds();
         }
-        if (classes
-            && (
-              (classes.contains("list-card") && classes.contains("js-member-droppable"))
-                || classes.contains("search-result-card")
-            )
-           ) {
-             showCardIds();
-             var card = node.querySelectorAll("a.list-card-title.js-card-name")[0];
-             if (card.getAttribute("href") == undefined) {
-               hrefReady(card).then(function(href) {
-                 var title = href.split("/");
-                 var s = title[title.length-1];
-                 var num = s.substr(0,s.indexOf("-"));
-                 var shortId = card.querySelector(".card-short-id");
-                 shortId.innerHTML = "#" + num + " ";
-               }, function(err) {
-                 log(err);
-               });
-             }
-           }
+        if (classes) {
+          if ((classes.contains("list-card") && classes.contains("js-member-droppable")) || classes.contains("search-result-card")) {
+            showCardIds();
+            var card = node.querySelectorAll("a.list-card-title.js-card-name")[0];
+            if (card.getAttribute("href") == undefined) {
+              hrefReady(card).then(function(href) {
+                var title = href.split("/");
+                var s = title[title.length-1];
+                var num = s.substr(0,s.indexOf("-"));
+                var shortId = card.querySelector(".card-short-id");
+                shortId.innerHTML = "#" + num + " ";
+              }, function(err) {
+                log(err);
+              });
+            }
+          } else if (classes.contains("list")) {
+            showListNumbers();
+          }
+        }
       }
     });
   });
