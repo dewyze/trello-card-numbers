@@ -10,14 +10,14 @@
     "48": "icon48.png",
     "128": "icon128.png" },
 
-  "permissions": [
-    "https://trello.com/*"
-  ],
+    "permissions": [
+      "https://trello.com/*"
+    ],
 
-  "content_scripts": [
-    {
-      "matches": ["https://trello.com/*"],
-      "js": ["jquery-1.11.1.min.js", "trello-card-numbers.js"]
-    }
-  ]
+    "content_scripts": [
+      {
+        "matches": ["https://trello.com/*"],
+        "js": ["trello-card-numbers.js"]
+      }
+    ]
 }
