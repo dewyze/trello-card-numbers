@@ -1,3 +1,8 @@
+## 1.1 (2015-03-18)
+- Remove jquery.
+- Add id to search results.
+- Fix queuing bug where if lightbox does not open, first id clicked is display regardless of last id clicked.
+
 ## 1.0.2 (2015-03-11)
 - Restore functionality preventing queueing of lightbox ids on card moves.
 
