@@ -111,11 +111,6 @@ window.addEventListener("load", function() {
 
   var config = { attributes: true, childList: true, subtree: true, characterData: true }
 
-  // $(document).on("DOMNodeInserted",".list", function() {
-  //   $(LIST_NUM_CARDS_SELECTOR).addClass(TCN_INLINE_BLOCK);
-  //   $(classify(TCN_INLINE_BLOCK)).css("display","inline-block");
-  // })
-
   var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
       if (mutation.addedNodes.length > 0) {
