@@ -12,7 +12,7 @@ function detailsReady() {
                 if (interval < inc) {
                     setTimeout(function() { detailsListener(interval); }, 100);
                 } else {
-                    reject("Lightbox Number Error");
+                    reject("Lightbox Timeout");
                 }
             }
         };
@@ -65,7 +65,7 @@ function addDisplayToArray(arr,style) {
     }
 }
 
-function addClass(selector, newClass, display) {
+function addClassWithDisplay(selector, newClass, display) {
     return function() {
         var objects = getByClass(selector);
         addClassToArray(objects, newClass);
@@ -101,26 +101,24 @@ function getAncestorBySelector(elem, selector) {
 }
 
 window.addEventListener("load", function() {
-    var showListNumbers = addClass("list-header-num-cards", "trello-card-numbers-inline-block", "inline-block");
+    var showListNumbers = addClassWithDisplay("list-header-num-cards", "trello-card-numbers-inline-block", "inline-block");
     showListNumbers();
-    var showCardIds = addClass("card-short-id", "trello-card-numbers-inline", "inline");
+    var showCardIds = addClassWithDisplay("card-short-id", "trello-card-numbers-inline", "inline");
     showCardIds();
 
     // show card numbers after card is inserted
     var target = document.querySelector("body");
-
     var config = { attributes: true, childList: true, subtree: true, characterData: true }
-
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.addedNodes.length > 0) {
                 var node = mutation.addedNodes[0];
                 var classes = node.classList;
-                if (classes && classes.contains("search-result-card")) {
-                    showCardIds();
-                }
-                if (classes) {
-                    if ((classes.contains("list-card") && classes.contains("js-member-droppable")) || classes.contains("search-result-card")) {
+                if (node.classList) {
+                    if (hasClass(node, "search-result-card")) {
+                        showCardIds();
+                    }
+                    else if (hasClass(node, "list-card") && hasClass(node, "js-member-droppable")) {
                         showCardIds();
                         var card = node.querySelectorAll("a.list-card-title.js-card-name")[0];
                         if (card.getAttribute("href") == undefined) {
@@ -145,23 +143,27 @@ window.addEventListener("load", function() {
     observer.observe(target,config);
 
     // add card number to card details lightbox
+    var id; // must set outside so each click overwrites the last id stored
     document.body.addEventListener("mouseup", function(e) {
         var listCard =  getAncestorBySelector(e.target, 'list-card-details') || getAncestorBySelector(e.target, 'search-result-card');
         if (listCard) {
-            var id = listCard.querySelectorAll(".card-short-id")[0].innerHTML;
-            detailsReady().then(function() {
+            var cardId = listCard.querySelectorAll(".card-short-id")[0];
+            if (cardId) {
+                id = cardId.innerHTML;
+                detailsReady().then(function() {
 
-                // if/else needed to handle multiple promises
-                var header = getByClass("trello-card-numbers-detail-header");
-                if (header.length > 0) {
-                    header.innerHTML = id;
-                } else {
-                    var obj = getByClass("window-title card-detail-title non-empty u-inline editable")[0];
-                    obj.innerHTML = "<h2 class='trello-card-numbers-detail-header quiet'>" + id + "</h2>" + obj.innerHTML;
-                }
-            }, function (err) {
-                log(err);
-            });
+                    // if/else needed to handle multiple promises
+                    var header = getByClass("trello-card-numbers-detail-header");
+                    if (header.length > 0) {
+                        header.innerHTML = id;
+                    } else {
+                        var obj = getByClass("window-title card-detail-title non-empty u-inline editable")[0];
+                        obj.innerHTML = "<h2 class='trello-card-numbers-detail-header quiet'>" + id + "</h2>" + obj.innerHTML;
+                    }
+                }, function (err) {
+                    null;
+                });
+            }
         }
     }, true);
 }, false);
