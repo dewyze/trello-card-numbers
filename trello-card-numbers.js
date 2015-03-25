@@ -8,10 +8,6 @@ var TCN_HEADER = "trello-card-numbers-detail-header";
 var TCN_INLINE = "trello-card-numbers-inline";
 var TCN_INLINE_BLOCK = "trello-card-numbers-inline-block";
 
-function classify(name) {
-  return "." + name;
-}
-
 // ensure lightbox is loaded before adding to it
 function detailsReady() {
     var promise = new Promise(function(resolve,reject) {
@@ -71,11 +67,20 @@ function addClassToArray(arr,klass) {
     };
 }
 
-function addDisplayToArray(arr,style) {
+function addStyleToArray(arr,attribute,style) {
     var len = arr.length;
     for (var i=0; i < len; i++) {
         var obj = arr[i];
-        obj.style.display = style;
+        obj.style[attribute] = style;
+    }
+}
+
+function boldifyCardids() {
+    arr = getByClass("trello-card-numbers-inline");
+    var len = arr.length;
+    for (var i=0; i < len; i++) {
+        var obj = arr[i];
+        obj.style.fontWeight = "bold";
     }
 }
 
@@ -84,7 +89,12 @@ function addClassWithDisplay(selector, newClass, display) {
         var objects = getByClass(selector);
         addClassToArray(objects, newClass);
         objects = getByClass(newClass);
-        addDisplayToArray(objects, display);
+        addStyleToArray(objects, "display", display);
+        chrome.storage.sync.get(function(items) {
+            if (selector == CARD_SHORT_ID && items["boldId"]) {
+                addStyleToArray(objects, "fontWeight", "bold");
+            }
+        });
     };
 }
 
