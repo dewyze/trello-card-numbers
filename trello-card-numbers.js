@@ -91,8 +91,13 @@ function addClassWithDisplay(selector, newClass, display) {
         objects = getByClass(newClass);
         addStyleToArray(objects, "display", display);
         chrome.storage.sync.get(function(items) {
-            if (selector == CARD_SHORT_ID && items["boldId"]) {
-                addStyleToArray(objects, "fontWeight", "bold");
+            if (selector == CARD_SHORT_ID) {
+                if (items.boldId) {
+                    addStyleToArray(objects, "fontWeight", "bold");
+                }
+                if (items.idColor) {
+                    addStyleToArray(objects, "color", "#" + items.idColor);
+                }
             }
         });
     };

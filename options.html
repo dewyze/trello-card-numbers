@@ -4,7 +4,8 @@
   <title>My Test Extension Options</title>
   <style>
     table {
-      width: 220px;
+      width: 250px;
+      height: 300px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -21,6 +22,10 @@
       <td class="align-left"><input type="checkbox" id="bold" value="true"><br/></td>
     </tr>
     <tr>
+      <td class="align-right"><label><h3><strong>Card Id Color: </strong></h3></label></td>
+      <td class="align-left"><input id="id-color" class="color"><br/></td>
+    </tr>
+    <tr>
       <td class="align-right"><label><h3><strong>Right-click 'Copy Id': </strong></h3></label></td>
       <td class="align-left"><input type="checkbox" id="copy" value="true"><br/></td>
     </tr>
@@ -30,5 +35,6 @@
   <button id="save">Save</button>
 
   <script src="options.js"></script>
+  <script  src="jscolor/jscolor.js"></script>
 </body>
 </html>
