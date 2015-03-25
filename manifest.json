@@ -17,7 +17,9 @@
 
     "permissions": [
       "https://trello.com/*",
-      "storage"
+      "storage",
+      "clipboardWrite",
+      "contextMenus"
     ],
 
     "content_scripts": [
@@ -25,5 +27,9 @@
         "matches": ["https://trello.com/*"],
         "js": ["trello-card-numbers.js"]
       }
-    ]
+    ],
+
+    "background": {
+      "scripts": ["copy.js"]
+    }
 }
