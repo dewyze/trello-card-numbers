@@ -2,11 +2,9 @@
 function save_options() {
     var bold = document.getElementById('bold').checked;
     var color = document.getElementById('id-color').value;
-    var copy = document.getElementById('copy').checked;
     chrome.storage.sync.set({
         boldId: bold,
-        idColor: color,
-        rightClickCopy: copy
+        idColor: color
     }, function() {
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
@@ -23,12 +21,10 @@ function restore_options() {
     // Use default value color = 'red' and likesColor = true.
     chrome.storage.sync.get({
         boldId: false,
-        idColor: "000000",
-        rightClickCopy: true
+        idColor: "000000"
     }, function(items) {
         document.getElementById('bold').checked = items.boldId;
         document.getElementById('id-color').value = items.idColor;
-        document.getElementById('copy').checked = items.rightClickCopy;
     });
 }
 
