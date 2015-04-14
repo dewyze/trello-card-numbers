@@ -1,3 +1,6 @@
+## 1.1.1 (2015-04-13)
+- Fix bug where card title changes made number disappear.
+
 ## 1.1 (2015-03-18)
 - Remove jquery.
 - Add id to search results.
