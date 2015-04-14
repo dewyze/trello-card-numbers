@@ -144,7 +144,7 @@ window.addEventListener("load", function() {
                 var node = mutation.addedNodes[0];
                 var classes = node.classList;
                 if (node.classList) {
-                    if (hasClass(node, SEARCH_RESULT_CARD)) {
+                    if (hasClass(node, SEARCH_RESULT_CARD) || hasClass(node, CARD_SHORT_ID)) {
                         showCardIds();
                     }
                     else if (hasClass(node, "list-card") && hasClass(node, "js-member-droppable")) {
