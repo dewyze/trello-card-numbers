@@ -1,4 +1,3 @@
-// Saves options to chrome.storage.sync.
 function save_options() {
     var bold = document.getElementById('bold').checked;
     var color = document.getElementById('id-color').value;
@@ -6,7 +5,6 @@ function save_options() {
         boldId: bold,
         idColor: color
     }, function() {
-        // Update status to let user know options were saved.
         var status = document.getElementById('status');
         status.textContent = 'Options saved.';
         setTimeout(function() {
@@ -15,16 +13,13 @@ function save_options() {
     });
 }
 
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
 function restore_options() {
-    // Use default value color = 'red' and likesColor = true.
     chrome.storage.sync.get({
         boldId: false,
         idColor: "000000"
     }, function(items) {
         document.getElementById('bold').checked = items.boldId;
-        document.getElementById('id-color').value = items.idColor;
+        document.getElementById('id-color').color.fromString(items.idColor);
     });
 }
 
