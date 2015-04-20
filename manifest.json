@@ -25,5 +25,10 @@
         "matches": ["https://trello.com/*"],
         "js": ["trello-card-numbers.js"]
       }
-    ]
+    ],
+
+    "background": {
+        "scripts": ["on-update.js"],
+        "persistent": false
+    }
 }
