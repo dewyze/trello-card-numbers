@@ -5,12 +5,13 @@ function save_options() {
         boldId: bold,
         idColor: color
     }, function() {
-        var status = document.getElementById('status');
-        status.textContent = 'Options saved.';
-        setTimeout(function() {
-            status.textContent = '';
-        }, 750);
+        window.close();
     });
+}
+
+function reset_defaults() {
+    document.getElementById('bold').checked = false;
+    document.getElementById('id-color').color.fromString("#000000");
 }
 
 function restore_options() {
@@ -25,3 +26,4 @@ function restore_options() {
 
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);
+document.getElementById('defaults').addEventListener('click', reset_defaults);
