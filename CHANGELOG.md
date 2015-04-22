@@ -1,3 +1,6 @@
+## 2.0 (2015-04-21)
+- Add options page, bold numbers, and colored numbers
+
 ## 1.1.1 (2015-04-13)
 - Fix bug where card title changes made number disappear.
 
