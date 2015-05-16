@@ -84,7 +84,7 @@ function boldifyCardids() {
     }
 }
 
-function addClassWithDisplay(selector, newClass, display) {
+function addClassWithDisplay(selector, newClass, display, callback) {
     return function() {
         var objects = getByClass(selector);
         addClassToArray(objects, newClass);
@@ -100,8 +100,21 @@ function addClassWithDisplay(selector, newClass, display) {
                 }
             }
         });
+        if (callback) {
+            callback(selector);
+        }
     };
 }
+
+function addTrailingSpace(selector) {
+    var objects = getByClass(selector);
+    var len = objects.length
+    for (var i=0; i < len; i++) {
+        var obj = objects[i];
+        obj.innerHTML = obj.innerHTML + " ";
+    };
+}
+
 
 function hasClass(target, className) {
     className = " " + className + " ";
@@ -130,9 +143,10 @@ function getAncestorBySelector(elem, selector) {
 }
 
 window.addEventListener("load", function() {
-    var showListNumbers = addClassWithDisplay(LIST_NUM_CARDS_CLASS, TCN_INLINE_BLOCK, "inline-block");
+    var showListNumbers = addClassWithDisplay(LIST_NUM_CARDS_CLASS, TCN_INLINE_BLOCK, "inline-block", null);
     showListNumbers();
-    var showCardIds = addClassWithDisplay(CARD_SHORT_ID, TCN_INLINE, "inline");
+    // addTrailingSpace(CARD_SHORT_ID);
+    var showCardIds = addClassWithDisplay(CARD_SHORT_ID, TCN_INLINE, "inline", addTrailingSpace);
     showCardIds();
 
     // show card numbers after card is inserted

@@ -1,3 +1,6 @@
+## 2.0.1 (2015-05-16)
+- Trello removed trailing space from card id, this fix adds it back.
+
 ## 2.0 (2015-04-21)
 - Add options page, bold numbers, and colored numbers
 

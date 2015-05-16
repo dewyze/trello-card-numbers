@@ -3,7 +3,7 @@
 
   "name": "Trello Card Numbers",
   "description": "Adds card numbers to a variety of places when using Trello.",
-  "version": "2.0",
+  "version": "2.0.1",
 
   "options_ui": {
     "page": "options.html",
@@ -25,10 +25,5 @@
         "matches": ["https://trello.com/*"],
         "js": ["trello-card-numbers.js"]
       }
-    ],
-
-    "background": {
-        "scripts": ["on-update.js"],
-        "persistent": false
-    }
+    ]
 }
