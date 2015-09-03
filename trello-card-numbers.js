@@ -1,4 +1,5 @@
 var LIGHTBOX_SELECTOR = "window-title card-detail-title non-empty u-inline editable";
+var CARD_LINK_CLASS = "list-card-title js-card-name";
 var CARD_LINK_QUERY_SELECTOR = "a.list-card-title.js-card-name";
 var LIST_NUM_CARDS_CLASS = "list-header-num-cards";
 var CARD_SHORT_ID = "card-short-id";
@@ -142,10 +143,37 @@ function getAncestorBySelector(elem, selector) {
     }
 }
 
+function parseHref(card, href) {
+    var present = card.querySelectorAll(".card-short-id");
+    console.log(present);
+    if (present.length == 0) {
+        var title = href.split("/");
+        var s = title[title.length-1];
+        var num = s.substr(0,s.indexOf("-"));
+        var shortId = document.createElement("span");
+        shortId.className = "card-short-id";
+        shortId.innerHTML = "#" + num + " ";
+        card.insertBefore(shortId, card.firstChild);
+    }
+}
+
+function addCardIds() {
+    var objects = getByClass("list-card-title js-card-name");
+    var len = objects.length
+    for (var i=0; i < len; i++) {
+        var card = objects[i];
+        var href = card.getAttribute("href");
+        parseHref(card, href);
+    };
+}
+
+
 window.addEventListener("load", function() {
     var showListNumbers = addClassWithDisplay(LIST_NUM_CARDS_CLASS, TCN_INLINE_BLOCK, "inline-block", null);
     showListNumbers();
     // addTrailingSpace(CARD_SHORT_ID);
+
+    addCardIds();
     var showCardIds = addClassWithDisplay(CARD_SHORT_ID, TCN_INLINE, "inline", addTrailingSpace);
     showCardIds();
 
@@ -159,6 +187,9 @@ window.addEventListener("load", function() {
                 var classes = node.classList;
                 if (node.classList) {
                     if (hasClass(node, SEARCH_RESULT_CARD) || hasClass(node, CARD_SHORT_ID)) {
+                        var card = node.querySelectorAll(CARD_LINK_QUERY_SELECTOR)[0];
+                        var href = card.getAttribute("href");
+                        parseHref(card, href);
                         showCardIds();
                     }
                     else if (hasClass(node, "list-card") && hasClass(node, "js-member-droppable")) {
@@ -166,14 +197,13 @@ window.addEventListener("load", function() {
                         var card = node.querySelectorAll(CARD_LINK_QUERY_SELECTOR)[0];
                         if (card.getAttribute("href") == undefined) {
                             hrefReady(card).then(function(href) {
-                                var title = href.split("/");
-                                var s = title[title.length-1];
-                                var num = s.substr(0,s.indexOf("-"));
-                                var shortId = card.querySelector(CARD_SHORT_ID_SELECTOR);
-                                shortId.innerHTML = "#" + num + " ";
+                                parseHref(card, href);
                             }, function(err) {
                                 log(err);
                             });
+                        } else if (card.getAttribute("href") != undefined) {
+                            var href = card.getAttribute("href");
+                            parseHref(card, href);
                         }
                     } else if (classes.contains("list")) {
                         showListNumbers();
