@@ -1,8 +1,3 @@
-## 2.1.0 (2015-09-04)
-- Trello removed the DOM element for the `.card-short-id` and broke the extension, this is a fix.
-- This parses the number from the URL instead and adds it in adds a new DOM element separate from the short id. In case they remove `.card-short-id` again, this should continue to work.
-- It also adds the card count for newly created lists.
-
 ## 2.0.1 (2015-05-16)
 - Trello removed trailing space from card id, this fix adds it back.
 
