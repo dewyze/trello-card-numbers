@@ -2,11 +2,12 @@ var LIGHTBOX_SELECTOR = "window-title card-detail-title non-empty u-inline edita
 var CARD_LINK_CLASS = "list-card-title js-card-name";
 var CARD_LINK_QUERY_SELECTOR = "a.list-card-title.js-card-name";
 var LIST_NUM_CARDS_CLASS = "list-header-num-cards";
+var CARD_SHORT_ID = "card-short-id";
+var CARD_SHORT_ID_SELECTOR = "." + CARD_SHORT_ID
 var SEARCH_RESULT_CARD = "search-result-card";
 var TCN_HEADER = "trello-card-numbers-detail-header";
-var TCN_CARD = "trello-card-numbers-number";
-var TCN_CARD_SELECTOR = ".trello-card-numbers-number";
-var TCN_LIST = "trello-card-numbers-list-count";
+var TCN_INLINE = "trello-card-numbers-inline";
+var TCN_INLINE_BLOCK = "trello-card-numbers-inline-block";
 
 // ensure lightbox is loaded before adding to it
 function detailsReady() {
@@ -63,9 +64,7 @@ function addClassToArray(arr,klass) {
     var len = arr.length
     for (var i=0; i < len; i++) {
         var obj = arr[i];
-        if (!hasClass(obj, klass)) {
-            obj.className = obj.className + " " + klass;
-        }
+        obj.className = obj.className + " " + klass;
     };
 }
 
@@ -77,14 +76,23 @@ function addStyleToArray(arr,attribute,style) {
     }
 }
 
-function addClassWithDisplay(selector, newClass, display) {
+function boldifyCardids() {
+    arr = getByClass("trello-card-numbers-inline");
+    var len = arr.length;
+    for (var i=0; i < len; i++) {
+        var obj = arr[i];
+        obj.style.fontWeight = "bold";
+    }
+}
+
+function addClassWithDisplay(selector, newClass, display, callback) {
     return function() {
         var objects = getByClass(selector);
         addClassToArray(objects, newClass);
         objects = getByClass(newClass);
         addStyleToArray(objects, "display", display);
         chrome.storage.sync.get(function(items) {
-            if (newClass == TCN_CARD) {
+            if (selector == CARD_SHORT_ID) {
                 if (items.boldId) {
                     addStyleToArray(objects, "fontWeight", "bold");
                 }
@@ -93,8 +101,21 @@ function addClassWithDisplay(selector, newClass, display) {
                 }
             }
         });
+        if (callback) {
+            callback(selector);
+        }
     };
 }
+
+function addTrailingSpace(selector) {
+    var objects = getByClass(selector);
+    var len = objects.length
+    for (var i=0; i < len; i++) {
+        var obj = objects[i];
+        obj.innerHTML = obj.innerHTML + " ";
+    };
+}
+
 
 function hasClass(target, className) {
     className = " " + className + " ";
@@ -123,20 +144,22 @@ function getAncestorBySelector(elem, selector) {
 }
 
 function parseHref(card, href) {
-    var present = card.querySelectorAll(TCN_CARD_SELECTOR);
+    var present = card.querySelectorAll(".card-short-id");
+    console.log(present);
     if (present.length == 0) {
         var title = href.split("/");
         var s = title[title.length-1];
         var num = s.substr(0,s.indexOf("-"));
         var shortId = document.createElement("span");
-        shortId.className = TCN_CARD;
+        shortId.className = "card-short-id";
         shortId.innerHTML = "#" + num + " ";
         card.insertBefore(shortId, card.firstChild);
     }
 }
 
-function addCardIds(objects) {
-    var len = objects.length;
+function addCardIds() {
+    var objects = getByClass("list-card-title js-card-name");
+    var len = objects.length
     for (var i=0; i < len; i++) {
         var card = objects[i];
         var href = card.getAttribute("href");
@@ -146,13 +169,12 @@ function addCardIds(objects) {
 
 
 window.addEventListener("load", function() {
-    var showListNumbers = addClassWithDisplay(LIST_NUM_CARDS_CLASS, TCN_LIST, "inline-block");
+    var showListNumbers = addClassWithDisplay(LIST_NUM_CARDS_CLASS, TCN_INLINE_BLOCK, "inline-block", null);
     showListNumbers();
+    // addTrailingSpace(CARD_SHORT_ID);
 
-    var cards = getByClass(CARD_LINK_CLASS);
-    addCardIds(cards);
-
-    var showCardIds = addClassWithDisplay(TCN_CARD, TCN_CARD, "inline");
+    addCardIds();
+    var showCardIds = addClassWithDisplay(CARD_SHORT_ID, TCN_INLINE, "inline", addTrailingSpace);
     showCardIds();
 
     // show card numbers after card is inserted
@@ -160,35 +182,33 @@ window.addEventListener("load", function() {
     var config = { attributes: true, childList: true, subtree: true, characterData: true }
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
-            var addedNodes = mutation.addedNodes;
-            var len = addedNodes.length;
-            if (len > 0) {
-                for (var i=0; i < len; i++) {
-                    var node = addedNodes[i];
-                    if (node.tagName == "DIV") {
-                        if (hasClass(node, SEARCH_RESULT_CARD)) {
-                            var card = node.querySelectorAll(CARD_LINK_QUERY_SELECTOR)[0];
-                            addCardIds([card]);
-                            showCardIds();
-                        } else if (hasClass(node, "list-card") && hasClass(node, "js-member-droppable")) {
-                            var card = node.querySelectorAll(CARD_LINK_QUERY_SELECTOR)[0];
-                            if (card.getAttribute("href") == undefined) {
-                                hrefReady(card).then(function(href) {
-                                    parseHref(card, href);
-                                    showCardIds();
-                                }, function(err) {
-                                    log(err);
-                                });
-                            } else if (card.getAttribute("href") != undefined) {
-                                var href = card.getAttribute("href");
-                                parseHref(card, href);
-                                showCardIds();
-                            }
-                        } else if (node.classList.contains("js-list")) {
-                            showListNumbers();
-                        }
+            if (mutation.addedNodes.length > 0) {
+                var node = mutation.addedNodes[0];
+                var classes = node.classList;
+                if (node.classList) {
+                    if (hasClass(node, SEARCH_RESULT_CARD) || hasClass(node, CARD_SHORT_ID)) {
+                        var card = node.querySelectorAll(CARD_LINK_QUERY_SELECTOR)[0];
+                        var href = card.getAttribute("href");
+                        parseHref(card, href);
+                        showCardIds();
                     }
-                };
+                    else if (hasClass(node, "list-card") && hasClass(node, "js-member-droppable")) {
+                        showCardIds();
+                        var card = node.querySelectorAll(CARD_LINK_QUERY_SELECTOR)[0];
+                        if (card.getAttribute("href") == undefined) {
+                            hrefReady(card).then(function(href) {
+                                parseHref(card, href);
+                            }, function(err) {
+                                log(err);
+                            });
+                        } else if (card.getAttribute("href") != undefined) {
+                            var href = card.getAttribute("href");
+                            parseHref(card, href);
+                        }
+                    } else if (classes.contains("list")) {
+                        showListNumbers();
+                    }
+                }
             }
         });
     });
@@ -200,7 +220,7 @@ window.addEventListener("load", function() {
     document.body.addEventListener("mouseup", function(e) {
         var listCard =  getAncestorBySelector(e.target, 'list-card-details') || getAncestorBySelector(e.target, SEARCH_RESULT_CARD);
         if (listCard) {
-            var cardId = listCard.querySelectorAll(TCN_CARD_SELECTOR)[0];
+            var cardId = listCard.querySelectorAll(CARD_SHORT_ID_SELECTOR)[0];
             if (cardId) {
                 id = cardId.innerHTML;
                 detailsReady().then(function() {
