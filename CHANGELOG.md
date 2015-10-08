@@ -1,3 +1,7 @@
+## 2.2.1 (2015-10-08)
+- Trello no longer includes the card-short-id span on card creation, so card numbers were not appearing. This adds them back in.
+- Do not add a class if it already present.
+
 ## 2.2.0 (2015-09-13)
 - Trello reverted the removal of 'card-short-id'. This version reverts to the old behavior to fix some bugs that were introduced when they brought it back.
 
