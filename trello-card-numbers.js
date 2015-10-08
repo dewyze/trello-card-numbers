@@ -63,7 +63,9 @@ function addClassToArray(arr,klass) {
     var len = arr.length
     for (var i=0; i < len; i++) {
         var obj = arr[i];
-        obj.className = obj.className + " " + klass;
+        if (!hasClass(obj, klass)) {
+            obj.className = obj.className + " " + klass;
+        }
     };
 }
 
@@ -169,8 +171,13 @@ window.addEventListener("load", function() {
                                 var title = href.split("/");
                                 var s = title[title.length-1];
                                 var num = s.substr(0,s.indexOf("-"));
-                                var shortId = card.querySelector(CARD_SHORT_ID_SELECTOR);
+                                console.log(card);
+                                var cardTitle = card.innerHTML;
+                                var shortId = document.createElement("span");
                                 shortId.innerHTML = "#" + num + " ";
+                                shortId.className = "card-short-id hide trello-card-numbers-inline trello-card-numbers-inline";
+                                card.insertBefore(shortId, card.firstChild);
+                                // var shortId = card.querySelector(CARD_SHORT_ID_SELECTOR);
                             }, function(err) {
                                 log(err);
                             });
