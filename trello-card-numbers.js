@@ -208,7 +208,7 @@ window.addEventListener("load", function() {
                         header.innerHTML = id;
                     } else {
                         var obj = getByClass(LIGHTBOX_SELECTOR)[0];
-                        obj.innerHTML = "<h2 class='" + TCN_HEADER + " quiet' style='display: inline-block;'>" + id + "</h2>" + obj.innerHTML;
+                        obj.innerHTML = "<h2 class='" + TCN_HEADER + " quiet' style='display: inline-block; margin-right: 10px'>" + id + "</h2>" + obj.innerHTML;
                     }
                 }, function (err) {
                     null;
