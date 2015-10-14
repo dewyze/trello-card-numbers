@@ -1,3 +1,7 @@
+## 2.2.2 (2015-10-14)
+- Add check for duplicate card short id to accommodate Trello DOM change.
+- Remove extra console.log that was left in.
+
 ## 2.2.1 (2015-10-08)
 - Trello no longer includes the card-short-id span on card creation, so card numbers were not appearing. This adds them back in.
 - Do not add a class if it already present.

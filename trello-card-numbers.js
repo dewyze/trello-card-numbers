@@ -166,12 +166,12 @@ window.addEventListener("load", function() {
                     else if (hasClass(node, "list-card") && hasClass(node, "js-member-droppable")) {
                         showCardIds();
                         var card = node.querySelectorAll(CARD_LINK_QUERY_SELECTOR)[0];
-                        if (card.getAttribute("href") == undefined) {
+                        var duplicateCheck = node.querySelectorAll(CARD_SHORT_ID_SELECTOR).length > 0;
+                        if (card.getAttribute("href") == undefined && !duplicateCheck) {
                             hrefReady(card).then(function(href) {
                                 var title = href.split("/");
                                 var s = title[title.length-1];
                                 var num = s.substr(0,s.indexOf("-"));
-                                console.log(card);
                                 var cardTitle = card.innerHTML;
                                 var shortId = document.createElement("span");
                                 shortId.innerHTML = "#" + num + " ";
