@@ -1,4 +1,4 @@
-var LIGHTBOX_SELECTOR = "window-title card-detail-title non-empty u-inline editable";
+var LIGHTBOX_SELECTOR = "window-title card-detail-title non-empty editable";
 var CARD_LINK_QUERY_SELECTOR = "a.list-card-title.js-card-name";
 var LIST_NUM_CARDS_CLASS = "list-header-num-cards";
 var CARD_SHORT_ID = "card-short-id";
