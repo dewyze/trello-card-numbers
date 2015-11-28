@@ -1,1 +1,3 @@
 - [Bill Rastello](https://github.com/wjr1985) - Tireless QA
+- [Desmond Brand](https://github.com/dmnd) - Lightbox styling improvements
+- [Daniel Graham](https://github.com/dngrhm) - Lightbox CSS selector changes

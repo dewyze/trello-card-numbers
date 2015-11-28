@@ -1,3 +1,7 @@
+## 2.2.3 (2015-11-28)
+- Change lightbox card number to inline style.
+- Change lightbox card number css selectors.
+
 ## 2.2.2 (2015-10-14)
 - Add check for duplicate card short id to accommodate Trello DOM change.
 - Remove extra console.log that was left in.
