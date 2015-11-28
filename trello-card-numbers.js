@@ -1,4 +1,4 @@
-var LIGHTBOX_SELECTOR = "window-title card-detail-title non-empty editable";
+var LIGHTBOX_SELECTOR = "window-title-text current hide-on-edit js-card-title";
 var CARD_LINK_QUERY_SELECTOR = "a.list-card-title.js-card-name";
 var LIST_NUM_CARDS_CLASS = "list-header-num-cards";
 var CARD_SHORT_ID = "card-short-id";
@@ -177,7 +177,6 @@ window.addEventListener("load", function() {
                                 shortId.innerHTML = "#" + num + " ";
                                 shortId.className = "card-short-id hide trello-card-numbers-inline trello-card-numbers-inline";
                                 card.insertBefore(shortId, card.firstChild);
-                                // var shortId = card.querySelector(CARD_SHORT_ID_SELECTOR);
                             }, function(err) {
                                 log(err);
                             });
@@ -208,7 +207,7 @@ window.addEventListener("load", function() {
                         header.innerHTML = id;
                     } else {
                         var obj = getByClass(LIGHTBOX_SELECTOR)[0];
-                        obj.innerHTML = "<h2 class='" + TCN_HEADER + " quiet' style='display: inline-block; margin-right: 10px'>" + id + "</h2>" + obj.innerHTML;
+                        obj.innerHTML = "<span class='" + TCN_HEADER + " quiet' style='display: inline-block; margin-right: 10px'>" + id + "</span>" + obj.innerHTML;
                     }
                 }, function (err) {
                     null;
