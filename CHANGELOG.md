@@ -1,3 +1,6 @@
+## 2.2.4 (2016-05-14)
+- Change lightbox card number to block style to deal with Trello DOM changes.
+
 ## 2.2.3 (2015-11-28)
 - Change lightbox card number to inline style.
 - Change lightbox card number css selectors.

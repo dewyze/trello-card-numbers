@@ -1,4 +1,4 @@
-var LIGHTBOX_SELECTOR = "window-title-text current hide-on-edit js-card-title";
+var LIGHTBOX_SELECTOR = "window-title";
 var CARD_LINK_QUERY_SELECTOR = "a.list-card-title.js-card-name";
 var LIST_NUM_CARDS_CLASS = "list-header-num-cards";
 var CARD_SHORT_ID = "card-short-id";
@@ -207,7 +207,12 @@ window.addEventListener("load", function() {
                         header.innerHTML = id;
                     } else {
                         var obj = getByClass(LIGHTBOX_SELECTOR)[0];
-                        obj.innerHTML = "<span class='" + TCN_HEADER + " quiet' style='display: inline-block; margin-right: 10px'>" + id + "</span>" + obj.innerHTML;
+                        var h2 = document.createElement('h2');
+                        h2.className = TCN_HEADER + ' quiet';
+                        h2.style.display = 'inline-block';
+                        h2.style.marginRight = '10px';
+                        h2.innerHTML = '<span>' + id + '</span>';
+                        obj.insertBefore(h2, obj.lastChild);
                     }
                 }, function (err) {
                     null;
