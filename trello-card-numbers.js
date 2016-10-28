@@ -55,10 +55,6 @@ function hrefReady(obj) {
     return promise;
 }
 
-function log(data) {
-    console.log(data);
-}
-
 function addClassToArray(arr,klass) {
     var len = arr.length
     for (var i=0; i < len; i++) {
@@ -178,7 +174,7 @@ window.addEventListener("load", function() {
                                 shortId.className = "card-short-id hide trello-card-numbers-inline trello-card-numbers-inline";
                                 card.insertBefore(shortId, card.firstChild);
                             }, function(err) {
-                                log(err);
+                                console.error(err);
                             });
                         }
                     } else if (classes.contains("list")) {
