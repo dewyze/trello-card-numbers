@@ -4,7 +4,7 @@ This chrome extension adds card numbers to trello cards to help when viewing boa
 This extension does the following:
 - Reveals card numbers on cards themselves
 - Reveals the card count for a given list
-- Adds are card number to a created card
+- Adds a card number to a created card
 - Adds a card number head in the detail view
 - Allows you to make card numbers bold
 - Allows you to change the color of the card numbers
