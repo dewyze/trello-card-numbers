@@ -140,8 +140,35 @@ function getAncestorBySelector(elem, selector) {
     }
 }
 
-window.addEventListener("load", function() {
-    var showListNumbers = addClassWithDisplay(LIST_NUM_CARDS_CLASS, TCN_INLINE_BLOCK, "inline-block", null);
+function getCardNumberFromUrl(url) {
+    var title = url.split('/');
+    var s = title[title.length-1];
+    var num = s.substr(0,s.indexOf('-'));
+    return num;
+}
+
+function addNumberToLightboxWhenReady(cardNumber) {
+    lightboxReady().then(function() {
+        // if/else needed to handle multiple promises
+        var header = getByClass(TCN_HEADER);
+        if (header.length > 0) {
+            header.innerHTML = cardNumber;
+        } else {
+            var obj = getByClass(LIGHTBOX_SELECTOR)[0];
+            var h2 = document.createElement('h2');
+            h2.className = TCN_HEADER + ' quiet';
+            h2.style.display = 'inline-block';
+            h2.style.marginRight = '10px';
+            h2.innerHTML = '<span>' + cardNumber + '</span>';
+            obj.insertBefore(h2, obj.lastChild);
+        }
+    }, function (err) {
+        null;
+    });
+}
+
+window.addEventListener('load', function() {
+    var showListNumbers = addClassWithDisplay(LIST_NUM_CARDS_CLASS, TCN_INLINE_BLOCK, 'inline-block', null);
     showListNumbers();
     // addTrailingSpace(CARD_SHORT_ID);
     var showCardIds = addClassWithDisplay(CARD_SHORT_ID, TCN_INLINE, 'inline', addTrailingSpace);
@@ -165,12 +192,9 @@ window.addEventListener("load", function() {
                         var duplicateCheck = node.querySelectorAll(CARD_SHORT_ID_SELECTOR).length > 0;
                         if (card.getAttribute('href') == undefined && !duplicateCheck) {
                             hrefReady(card).then(function(href) {
-                                var title = href.split("/");
-                                var s = title[title.length-1];
-                                var num = s.substr(0,s.indexOf("-"));
                                 var cardTitle = card.innerHTML;
                                 var shortId = document.createElement('span');
-                                shortId.innerHTML = '#' + num + ' ';
+                                shortId.innerHTML = '#' + getCardNumberFromUrl(href) + ' ';
                                 shortId.className = 'card-short-id hide trello-card-numbers-inline trello-card-numbers-inline';
                                 card.insertBefore(shortId, card.firstChild);
                             }, function(err) {
@@ -195,25 +219,16 @@ window.addEventListener("load", function() {
             var cardId = listCard.querySelectorAll(CARD_SHORT_ID_SELECTOR)[0];
             if (cardId) {
                 id = cardId.innerHTML;
-                detailsReady().then(function() {
-
-                    // if/else needed to handle multiple promises
-                    var header = getByClass(TCN_HEADER);
-                    if (header.length > 0) {
-                        header.innerHTML = id;
-                    } else {
-                        var obj = getByClass(LIGHTBOX_SELECTOR)[0];
-                        var h2 = document.createElement('h2');
-                        h2.className = TCN_HEADER + ' quiet';
-                        h2.style.display = 'inline-block';
-                        h2.style.marginRight = '10px';
-                        h2.innerHTML = '<span>' + id + '</span>';
-                        obj.insertBefore(h2, obj.lastChild);
-                    }
-                }, function (err) {
-                    null;
-                });
+                addNumberToLightboxWhenReady(id);
             }
         }
     }, true);
+
+    var cardUrlRegex = /trello\.com\/c\//;
+    var pageUrl = document.location.href;
+    var matches = pageUrl.match(cardUrlRegex);
+    if (matches != null && matches.length !== 0) {
+        var num = getCardNumberFromUrl(pageUrl);
+        addNumberToLightboxWhenReady(num);
+    }
 }, false);
