@@ -1,3 +1,5 @@
+[![](icon128.png)](https://chrome.google.com/webstore/detail/trello-card-numbers/kadpkdielickimifpinkknemjdipghaf)
+
 # Trello Card Numbers
 This chrome extension adds card numbers to trello cards to help when viewing boards with a group of people. Trello actually includes card numbers but hides them by default.
 ## Overview
