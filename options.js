@@ -13,14 +13,14 @@ function save_options() {
 
 function reset_defaults() {
     document.getElementById('bold').checked = false;
-    document.getElementById('show-copy').checked = true;
+    document.getElementById('show-copy').checked = false;
     document.getElementById('id-color').color.fromString("#000000");
 }
 
 function restore_options() {
     chrome.storage.sync.get({
         boldId: false,
-        showCopy: true,
+        showCopy: false,
         idColor: "000000"
     }, function(items) {
         document.getElementById('bold').checked = items.boldId;

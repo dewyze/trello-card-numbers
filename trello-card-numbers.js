@@ -164,8 +164,7 @@ function addNumberToLightboxWhenReady(cardNumber) {
 
 
             chrome.storage.sync.get(function(items) {
-                // undefined if not set. Assume enabled by default.
-                if (items.showCopy == undefined || items.showCopy == true) {
+                if (items.showCopy == true) {
                     var copyButton = getByClass("button-link js-copy-card")[0];
 
                     var copyDetailsButton = document.createElement('a');
