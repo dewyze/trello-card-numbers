@@ -1,3 +1,4 @@
 - [Bill Rastello](https://github.com/wjr1985) - Tireless QA
 - [Desmond Brand](https://github.com/dmnd) - Lightbox styling improvements
 - [Daniel Graham](https://github.com/dngrhm) - Lightbox CSS selector changes
+- [ytn3rd](https://github.com/ytn3rd) - Bug fix, Copy Details Options

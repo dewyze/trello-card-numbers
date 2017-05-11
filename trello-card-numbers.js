@@ -162,7 +162,6 @@ function addNumberToLightboxWhenReady(cardNumber) {
             h2.innerHTML = '<span>' + cardNumber + '</span>';
             obj.insertBefore(h2, obj.lastChild);
 
-
             chrome.storage.sync.get(function(items) {
                 if (items.showCopy == true) {
                     var copyButton = getByClass("button-link js-copy-card")[0];
@@ -172,7 +171,7 @@ function addNumberToLightboxWhenReady(cardNumber) {
                     copyDetailsButton.href = '#';
                     copyDetailsButton.onclick = function() {
                         var cardText = getByClass('js-card-detail-title-input')[0].value;
-                
+
                         // Ew....
                         // Source http://stackoverflow.com/a/18455088
                         var copyFrom = document.createElement("textarea");
@@ -183,9 +182,9 @@ function addNumberToLightboxWhenReady(cardNumber) {
                         document.body.removeChild(copyFrom);
                     };
                     copyDetailsButton.innerHTML = '<span class="icon-sm icon-card"></span>&nbsp;Copy details</a>';
-                    copyButton.parentNode.insertBefore(copyDetailsButton, copyButton.nextSibling); 
+                    copyButton.parentNode.insertBefore(copyDetailsButton, copyButton.nextSibling);
                 }
-            });       
+            });
         }
     }, function (err) {
         null;
