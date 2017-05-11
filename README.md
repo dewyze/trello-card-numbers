@@ -2,6 +2,7 @@
 
 # Trello Card Numbers
 This chrome extension adds card numbers to trello cards to help when viewing boards with a group of people. Trello actually includes card numbers but hides them by default.
+
 ## Overview
 This extension does the following:
 - Reveals card numbers on cards themselves
@@ -14,5 +15,8 @@ This extension does the following:
 ## Credit
 This project was based off the widely available bookmarklet for trello numbers found [here](http://goo.gl/yKfjV).
 
-### Chrome Web Store
+## Chrome Web Store
 Install it [here](https://chrome.google.com/webstore/detail/trello-card-numbers/kadpkdielickimifpinkknemjdipghaf?hl=en&gl=US).
+
+## Safari Port 
+A safari port of this extension can be found [here](https://github.com/fourpi/trello-card-numbers-safari).

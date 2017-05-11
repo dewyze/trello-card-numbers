@@ -161,11 +161,37 @@ function addNumberToLightboxWhenReady(cardNumber) {
             h2.style.marginRight = '10px';
             h2.innerHTML = '<span>' + cardNumber + '</span>';
             obj.insertBefore(h2, obj.lastChild);
+
+
+            chrome.storage.sync.get(function(items) {
+                if (items.showCopy == true) {
+                    var copyButton = getByClass("button-link js-copy-card")[0];
+
+                    var copyDetailsButton = document.createElement('a');
+                    copyDetailsButton.className = 'button-link';
+                    copyDetailsButton.href = '#';
+                    copyDetailsButton.onclick = function() {
+                        var cardText = getByClass('js-card-detail-title-input')[0].value;
+                
+                        // Ew....
+                        // Source http://stackoverflow.com/a/18455088
+                        var copyFrom = document.createElement("textarea");
+                        copyFrom.textContent = cardNumber.trim() + ", " + cardText; // Unsure if its ok to refer to cardNumber from params.
+                        document.body.appendChild(copyFrom);
+                        copyFrom.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(copyFrom);
+                    };
+                    copyDetailsButton.innerHTML = '<span class="icon-sm icon-card"></span>&nbsp;Copy details</a>';
+                    copyButton.parentNode.insertBefore(copyDetailsButton, copyButton.nextSibling); 
+                }
+            });       
         }
     }, function (err) {
         null;
     });
 }
+
 
 window.addEventListener('load', function() {
     var showListNumbers = addClassWithDisplay(LIST_NUM_CARDS_CLASS, TCN_INLINE_BLOCK, 'inline-block', null);
@@ -228,7 +254,7 @@ window.addEventListener('load', function() {
     var pageUrl = document.location.href;
     var matches = pageUrl.match(cardUrlRegex);
     if (matches != null && matches.length !== 0) {
-        var num = getCardNumberFromUrl(pageUrl);
+        var num = '#' + getCardNumberFromUrl(pageUrl);
         addNumberToLightboxWhenReady(num);
     }
 }, false);
