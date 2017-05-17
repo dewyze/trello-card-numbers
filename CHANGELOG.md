@@ -1,3 +1,6 @@
+## 2.2.6 (2017-05-16)
+- Add reload after 1 second when going to a new board.
+
 ## 2.2.5 (2017-05-11)
 - Fix bug where '#' would not display when loading from URL
 - Added an option for a "Copy details" button which copies the card title to the clipboard
