@@ -8,26 +8,32 @@
       height: 150px;
       margin-left: auto;
       margin-right: auto;
+      margin-bottom: 30px;
     }
     .align-left { text-align: left; }
     .align-right { text-align: right; }
-
+    .align-center { text-align: center; }
   </style>
 </head>
 
 <body>
   <table>
     <tr>
-      <td class="align-right"><label><h3><strong>Card Id Color: </strong></h3></label></td>
-      <td class="align-left"><input id="id-color" class="color"><br/></td>
+      <td class="align-right"><label><h3><strong>Card Id Color:</strong></h3></label></td>
+      <td class="align-left"><input id="id-color" class="color"></td>
     </tr>
     <tr>
       <td class="align-right"><label><h3><strong>Bold Card Numbers: </strong></h3></label></td>
-      <td class="align-left"><input type="checkbox" id="bold" value="true"><br/></td>
+      <td class="align-left"><input type="checkbox" id="bold" value="true"></td>
     </tr>
     <tr>
       <td class="align-right"><label><h3><strong>Show copy link: </strong></h3></label></td>
-      <td class="align-left"><input type="checkbox" id="show-copy" value="false"><br/></td>
+      <td class="align-left"><input type="checkbox" id="show-copy" value="false"></td>
+    </tr>
+    <tr>
+      <td class="align-center" colspan="2">
+        <input id="copy-prefix" value="" size="3" class="align-right">#000<input id="copy-sep" value=", " size="1">Example title<input id="copy-suffix" value="" size="1">
+      </td>
     </tr>
   </table>
 
