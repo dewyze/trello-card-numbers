@@ -1,3 +1,6 @@
+const DEFAULT_COLOR = "000000"
+const DEFAULT_BOLD = false
+const DEFAULT_SHOW_COPY = false
 const DEFAULT_COPY_PREFIX = ""
 const DEFAULT_COPY_SEP = ", "
 const DEFAULT_COPY_SUFFIX = ""
@@ -22,9 +25,9 @@ function save_options() {
 }
 
 function reset_defaults() {
-    document.getElementById('bold').checked = false;
-    document.getElementById('show-copy').checked = false;
-    document.getElementById('id-color').color.fromString("#000000");
+    document.getElementById('bold').checked = DEFAULT_BOLD;
+    document.getElementById('show-copy').checked = DEFAULT_SHOW_COPY;
+    document.getElementById('id-color').color.fromString("#"+DEFAULT_COLOR);
     document.getElementById('copy-prefix').value = DEFAULT_COPY_PREFIX;
     document.getElementById('copy-sep').value = DEFAULT_COPY_SEP;
     document.getElementById('copy-suffix').value = DEFAULT_COPY_SUFFIX;
@@ -32,9 +35,9 @@ function reset_defaults() {
 
 function restore_options() {
     chrome.storage.sync.get({
-        boldId: false,
-        showCopy: false,
-        idColor: "000000",
+        boldId: DEFAULT_BOLD,
+        showCopy: DEFAULT_SHOW_COPY,
+        idColor: DEFAULT_COLOR,
         copyPrefix: DEFAULT_COPY_PREFIX,
         copySep: DEFAULT_COPY_SEP,
         copySuffix: DEFAULT_COPY_SUFFIX
