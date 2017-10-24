@@ -234,7 +234,7 @@ window.addEventListener('load', function() {
                         showCardIds();
                         var card = node.querySelectorAll(CARD_LINK_QUERY_SELECTOR)[0];
                         var duplicateCheck = node.querySelectorAll(CARD_SHORT_ID_SELECTOR).length > 0;
-                        if (card.getAttribute('href') == undefined && !duplicateCheck) {
+                        if (card && card.getAttribute('href') == undefined && !duplicateCheck) {
                             hrefReady(card).then(function(href) {
                                 var cardTitle = card.innerHTML;
                                 var shortId = document.createElement('span');
