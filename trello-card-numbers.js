@@ -1,8 +1,8 @@
 var LIGHTBOX_SELECTOR = 'window-title';
-var CARD_LINK_QUERY_SELECTOR = 'a.list-card-title.js-card-name';
 var LIST_NUM_CARDS_CLASS = 'list-header-num-cards';
 var CARD_SHORT_ID = 'card-short-id';
-var CARD_SHORT_ID_SELECTOR = '.' + CARD_SHORT_ID
+var CARD_SHORT_ID_SELECTOR = '.' + CARD_SHORT_ID;
+var CARD_SHORT_ID_CONTAINER = 'span.list-card-title.js-card-name';
 var SEARCH_RESULT_CARD = 'search-result-card';
 var TCN_HEADER = 'trello-card-numbers-detail-header';
 var TCN_INLINE = 'trello-card-numbers-inline';
@@ -232,10 +232,11 @@ window.addEventListener('load', function() {
                         showCardIds();
                     } else if (hasClass(node, 'list-card') && hasClass(node, 'js-member-droppable')) {
                         showCardIds();
-                        var card = node.querySelectorAll(CARD_LINK_QUERY_SELECTOR)[0];
                         var duplicateCheck = node.querySelectorAll(CARD_SHORT_ID_SELECTOR).length > 0;
-                        if (card && card.getAttribute('href') == undefined && !duplicateCheck) {
-                            hrefReady(card).then(function(href) {
+                        if (node && node.getAttribute('href') == undefined && !duplicateCheck) {
+                            hrefReady(node).then(function(href) {
+                              console.log(node);
+                                var card = node.querySelectorAll(CARD_SHORT_ID_CONTAINER)[0];
                                 var cardTitle = card.innerHTML;
                                 var shortId = document.createElement('span');
                                 shortId.innerHTML = '#' + getCardNumberFromUrl(href) + ' ';
