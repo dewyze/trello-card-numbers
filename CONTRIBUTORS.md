@@ -1,4 +1,6 @@
 - [Bill Rastello](https://github.com/wjr1985) - Tireless QA
 - [Desmond Brand](https://github.com/dmnd) - Lightbox styling improvements
 - [Daniel Graham](https://github.com/dngrhm) - Lightbox CSS selector changes
+- [Hugo Ferreira](https://github.com/hugocf) - Improve html/css in options box. Add customization to copy details
+- [Jon Hemstreet](https://github.com/hemstreet) - Check for method call on nil object
 - [ytn3rd](https://github.com/ytn3rd) - Bug fix, Copy Details Options

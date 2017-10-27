@@ -1,3 +1,9 @@
+## 2.3.0 (2017-10-27)
+- Fix bug where method is called on nil
+- Fix bug where number isn't added on card create
+- Add customizations to copy details button
+- Improve html/css around options box
+
 ## 2.2.6 (2017-05-16)
 - Add reload after 1 second when going to a new board.
 
