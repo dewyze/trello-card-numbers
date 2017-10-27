@@ -191,7 +191,8 @@ function addNumberToLightboxWhenReady(cardNumber) {
                         // Ew....
                         // Source http://stackoverflow.com/a/18455088
                         var copyFrom = document.createElement("textarea");
-                        copyFrom.textContent = cardNumber.trim() + ", " + cardText; // Unsure if its ok to refer to cardNumber from params.
+                        // Unsure if its ok to refer to cardNumber from params.
+                        copyFrom.textContent = items.copyPrefix + cardNumber.trim() + items.copySep + cardText + items.copySuffix;
                         document.body.appendChild(copyFrom);
                         copyFrom.select();
                         document.execCommand('copy');

@@ -3,33 +3,48 @@
 <head>
   <title>My Test Extension Options</title>
   <style>
-    table {
+    #copy-prefix {
+      text-align: right;
+    }
+
+    #options {
       width: 250px;
       height: 150px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 30px auto 20px auto;
     }
-    .align-left { text-align: left; }
-    .align-right { text-align: right; }
-
+    
+    .option-line {
+      margin-bottom: 20px;
+    }
+    
+    .option-details {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    
+    label {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 0.8em;
+    }
   </style>
 </head>
 
 <body>
-  <table>
-    <tr>
-      <td class="align-right"><label><h3><strong>Card Id Color: </strong></h3></label></td>
-      <td class="align-left"><input id="id-color" class="color"><br/></td>
-    </tr>
-    <tr>
-      <td class="align-right"><label><h3><strong>Bold Card Numbers: </strong></h3></label></td>
-      <td class="align-left"><input type="checkbox" id="bold" value="true"><br/></td>
-    </tr>
-    <tr>
-      <td class="align-right"><label><h3><strong>Show copy link: </strong></h3></label></td>
-      <td class="align-left"><input type="checkbox" id="show-copy" value="false"><br/></td>
-    </tr>
-  </table>
+  <div id="options">
+    <div class="option-line">
+      <label for="id-color">Card Id Color:</label> <input id="id-color" class="color">
+    </div>
+    <div class="option-line">
+      <label><input type="checkbox" id="bold" value="false"> Bold Card Numbers</label>
+    </div>
+    <div class="option-line">
+      <label><input type="checkbox" id="show-copy" value="false"> Show "Copy details" button:</label>
+      <div class="option-details">
+        <input id="copy-prefix" value="" size="4" class="align-right"> #000 <input id="copy-sep" value=", " size="1"> Example title <input id="copy-suffix" value="" size="1">
+      </div>
+    </div>
+  </div>
 
   <div id="status"></div>
   <button id="save">Save and Exit</button>
