@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Test Extension Options</title>
+  <style>
+    #popup {
+      font-family: "Helvetica", sans-serif;
+      width: 100px;
+      height: 50px;
+      font-size: 14px;
+    }
+
+    #switch {
+      width: 60px;
+      margin: 0 auto;
+      visibility: hidden;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {display:none;}
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before { 
+      &#45;webkit&#45;transform: translateX(26px); 
+      &#45;ms&#45;transform: translateX(26px); 
+      transform: translateX(26px); 
+    } 
+
+
+    #on {
+      width: 200px;
+      height: 100px;
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="popup">
+      Toggle On/Off for this board
+    </div>
+
+    <div id="switch">
+      <label class="switch">
+        <input id="toggle" type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <script src="board-toggle.js"></script>
+</body>
+</html>

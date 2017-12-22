@@ -17,6 +17,7 @@
 
     "permissions": [
       "https://trello.com/*",
+      "declarativeContent",
       "storage"
     ],
 
@@ -25,5 +26,15 @@
         "matches": ["https://trello.com/*"],
         "js": ["trello-card-numbers.js"]
       }
-    ]
+    ],
+
+    "page_action": {
+      "default_title": "Trello Card Numbers",
+      "default_popup": "popup.html"
+    },
+
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    }
 }
